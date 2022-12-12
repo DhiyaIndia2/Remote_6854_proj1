@@ -52,19 +52,24 @@ line_count = print_all_paths(data_lst)
 #from start to end => movt data of joints from given src_to_dst'
 #from onr end to next start => homing point!
 
-data_frame, dictt = 0, 0
+#put the chunk in temp_file.txt
+data_frame = 0
+temp_file = open('temp_file.csv', 'w+')
 for i in range(line_count):
     if 'Joint command' in data_lst[i]:
         start, end = i+1, 0
         for temp in range(start, line_count):
             if ('END' in data_lst[temp]) or ('STMOV' in data_lst[temp]):
-                end = temp
+                i = end = temp
                 break
-        dictt = create_dictt(data_lst, start, end)
+        temp_file.writelines(data_lst[start:end])
+        data_frame = pd.DataFrame(temp_file)
         #print(data_lst[start], '\n', data_lst[end])
         
         #data_series = pd.DataFrame(data_lst[start : end])
-        #print(data_series)
+    if ('END' in data_lst[i]) or ('STMOV' in data_lst[i]):
+        
+
     
 
 
