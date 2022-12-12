@@ -5,7 +5,7 @@ lines = file1.readlines()
 #data is stored in file
 #read lines and import the data to dictionaries pertaining to data:
 
-csv_file = open('temp_files.csv','a+')
+#csv_file = open('temp_files.csv','a+')
 #csv_file.truncate() #ensure clean file
 chunk_movt, chunk_homing = [], []
 dictt = {}
@@ -38,9 +38,25 @@ for i in range(no_of_lines-1, 0 , -1):
         chunk_homing = lines[start+1 : end-1]
         i = start+1 #updating i to help reduce iterations
 
+        #post processing of chunks
+        temp = []
+        for x in chunk_homing:
+            x.strip()
+            temp.append(x.split())
+           
+        chunk_homing = temp 
+        temp2 = []
+        for x in chunk_movt:
+            x.strip()
+            temp2.append(x.split())
+            
+        chunk_movt = temp2
+
+
         key = cache_path_name
-        value = {'movt': chunk_movt, 'homing': chunk_homing}
+        value = {'homing': chunk_homing, 'movt': chunk_movt}
 
         dictt.update({key : value})
         
-        
+
+print(dictt["R1_P3_P1"])       
