@@ -25,17 +25,17 @@ for i in range(no_of_lines-1, 0 , -1):
         cache_path_name = ((lines[end].split())[1]).strip()
 
         #now get movt data of the port
-        chunk_movt = lines[end+1 : start-1]
+        chunk_movt = lines[end+1 : start]
         
         #now get the corresponding homing point
         for j in range(end, 0, -1):
-            if('END' in lines[j]):
+            if('END' in lines[j]) or ('JT' in lines[j]):
                 start  = j
                 break
         #end has 'STMOV'
         #start is at 'END' of previous path 
         # so from this start->end we have homing point of our requested path
-        chunk_homing = lines[start+1 : end-1]
+        chunk_homing = lines[start+1 : end]
         i = start+1 #updating i to help reduce iterations
 
         #post processing of chunks
@@ -52,11 +52,15 @@ for i in range(no_of_lines-1, 0 , -1):
             
         chunk_movt = temp2
 
-
+        #updating the dictt with key value pairs, corresponding to each pathway, 
+        #note that :
+        # key is each pathways name
+        # value is each pathways homing-path and actual-path
         key = cache_path_name
         value = {'homing': chunk_homing, 'movt': chunk_movt}
 
         dictt.update({key : value})
         
 
-print(dictt["R1_P3_P1"])       
+print(dictt["R1_P1_P1"])       
+
