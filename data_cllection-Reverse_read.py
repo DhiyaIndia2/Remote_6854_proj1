@@ -29,7 +29,7 @@ for i in range(no_of_lines-1, 0 , -1):
         
         #now get the corresponding homing point
         for j in range(end, 0, -1):
-            if('END' in lines[j]) or ('JT' in lines[j]):
+            if('END' in lines[j]) or ('JT' in lines[j]): #this 'JT' is just for the last check!
                 start  = j
                 break
         #end has 'STMOV'
